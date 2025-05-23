@@ -2,96 +2,120 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
+  Modal,
+  FlatList,
   Platform,
 } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import CheckBox from '@react-native-community/checkbox';
+import { countries } from '../data/countries';
 import Logo from '../assets/galaxy_logo1.svg';
 
-const RegisterStep2Screen = ({ navigation }) => {
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [documentId, setDocumentId] = useState('');
-  const [birthDate, setBirthDate] = useState(null);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+const RegisterStep1Screen = ({ navigation }) => {
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [email, setEmail] = useState('');
+  const [phoneCode, setPhoneCode] = useState('');
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
-  const showDatePicker = () => setDatePickerVisibility(true);
-  const hideDatePicker = () => setDatePickerVisibility(false);
+  const filteredCountries = countries.filter((country) =>
+    ${country.label} ${country.code}
+      .toLowerCase()
+      .includes(searchText.toLowerCase())
+  );
 
-  const handleConfirm = (date) => {
-    setBirthDate(date);
-    hideDatePicker();
-  };
-
-  const handleContinue = () => {
-    if (name && lastName && documentId && birthDate) {
-      navigation.navigate('RegisterStep3');
-    }
+  const selectCountry = (country) => {
+    setSelectedCountry(country);
+    setPhoneCode(country.code);
+    setModalVisible(false);
+    setSearchText('');
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.progressBar}>
-        <View style={[styles.step, styles.activeStep]} />
-        {[...Array(5)].map((_, i) => (
-          <View key={i} style={styles.step} />
-        ))}
-      </View>
-
       <Logo width={100} height={100} style={styles.logo} />
-      <Text style={styles.title}>datos personales</Text>
 
-      <TextInput
+      <Text style={styles.description}>
+        Te acompañamos en el proceso de registro de forma sencilla y rápida
+      </Text>
+
+      <Text style={styles.warning}>Indícanos tu país y correo electrónico</Text>
+
+      {/* Selector de país */}
+      <TouchableOpacity
         style={styles.input}
-        placeholder="Nombre"
-        placeholderTextColor="#ccc"
-        value={name}
-        onChangeText={setName}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Apellidos"
-        placeholderTextColor="#ccc"
-        value={lastName}
-        onChangeText={setLastName}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Documento de identidad"
-        placeholderTextColor="#ccc"
-        value={documentId}
-        onChangeText={setDocumentId}
-        keyboardType="numeric"
-      />
-
-      <TouchableOpacity style={styles.input} onPress={showDatePicker}>
-        <Text style={{ color: birthDate ? '#fff' : '#ccc' }}>
-          {birthDate
-            ? new Date(birthDate).toLocaleDateString()
-            : 'Fecha de nacimiento'}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={{ color: selectedCountry ? '#000' : '#888' }}>
+          {selectedCountry ? selectedCountry.label : 'Selecciona un país'}
         </Text>
-        <Icon name="calendar" size={18} color="#ccc" style={styles.icon} />
       </TouchableOpacity>
 
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-        maximumDate={new Date()}
-        locale="es_ES"
-        headerTextIOS="Elige una fecha"
-        cancelTextIOS="Cancelar"
-        confirmTextIOS="Confirmar"
-        themeVariant="dark"
+      {/* Modal */}
+      <Modal visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <TextInput
+            placeholder="buscar indicativo de país"
+            placeholderTextColor="#ccc"
+            style={styles.searchInput}
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+
+          <FlatList
+            data={filteredCountries}
+            keyExtractor={(item) => item.value}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.countryItem}
+                onPress={() => selectCountry(item)}
+              >
+                <item.flag width={30} height={20} />
+                <Text style={styles.countryLabel}>{item.label}</Text>
+                <Text style={styles.countryCode}>{item.code}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </Modal>
+
+      {/* Input de correo */}
+      <TextInput
+        placeholder="e-mail"
+        placeholderTextColor="#888"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleContinue}>
+      {/* Teléfono */}
+      <View style={styles.input}>
+        <Text style={{ color: phoneCode ? '#000' : '#888' }}>
+          {phoneCode || 'Teléfono'}
+        </Text>
+      </View>
+
+      {/* Checkbox */}
+      <View style={styles.checkboxContainer}>
+        <CheckBox value={acceptedTerms} onValueChange={setAcceptedTerms} />
+        <Text style={styles.checkboxLabel}>
+          acepto términos legales y políticas de privacidad
+        </Text>
+      </View>
+
+      {/* Botón */}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          if (acceptedTerms && selectedCountry && email && phoneCode) {
+            navigation.navigate('Home');
+          }
+        }}
+      >
         <Text style={styles.buttonText}>continuar</Text>
       </TouchableOpacity>
     </View>
@@ -99,60 +123,64 @@ const RegisterStep2Screen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 30, backgroundColor: '#1d1d1d' },
-  progressBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-    paddingHorizontal: 20,
-  },
-  step: {
-    height: 4,
-    backgroundColor: '#444',
-    borderRadius: 2,
-    flex: 1,
-    marginHorizontal: 2,
-  },
-  activeStep: {
-    backgroundColor: '#ec008c',
-  },
-  logo: {
-    alignSelf: 'center',
-    marginVertical: 20,
-  },
-  title: {
-    color: '#f96d00',
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-    textTransform: 'lowercase',
-  },
+  container: { flex: 1, padding: 30, paddingTop: 50 },
+  logo: { alignSelf: 'center', marginBottom: 20 },
+  description: { fontSize: 16, textAlign: 'center', marginBottom: 8 },
+  warning: { fontSize: 14, textAlign: 'center', marginBottom: 20 },
   input: {
+    borderRadius: 8,
+    backgroundColor: '#f2f2f2',
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    paddingVertical: Platform.OS === 'ios' ? 14 : 10,
+  },
+  checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#333',
-    borderRadius: 10,
-    padding: Platform.OS === 'ios' ? 14 : 10,
-    marginBottom: 15,
-    paddingHorizontal: 15,
-    color: '#fff',
+    marginVertical: 15,
   },
-  icon: {
-    marginLeft: 'auto',
-  },
+  checkboxLabel: { marginLeft: 8, fontSize: 12 },
   button: {
-    backgroundColor: '#ec008c',
     paddingVertical: 15,
-    borderRadius: 12,
-    marginTop: 30,
+    borderRadius: 10,
     alignItems: 'center',
+    backgroundColor: '#ec008c',
   },
   buttonText: {
-    color: '#fff',
+    color: '#ffffff',
     textTransform: 'uppercase',
     fontWeight: 'bold',
+  },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: '#222',
+    padding: 20,
+    paddingTop: 50,
+  },
+  searchInput: {
+    backgroundColor: '#333',
+    color: '#fff',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  countryItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    borderBottomColor: '#444',
+    borderBottomWidth: 1,
+  },
+  countryLabel: {
+    marginLeft: 10,
     fontSize: 16,
+    color: '#fff',
+    flex: 1,
+  },
+  countryCode: {
+    fontSize: 16,
+    color: '#aaa',
   },
 });
 
-export default RegisterStep2Screen;
+export default RegisterStep1Screen;
