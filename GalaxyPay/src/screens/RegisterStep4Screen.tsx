@@ -233,4 +233,151 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+import 'package:flutter/material.dart';
 
+class InformacionLaboralPage extends StatefulWidget {
+  @override
+  _InformacionLaboralPageState createState() => _InformacionLaboralPageState();
+}
+
+class _InformacionLaboralPageState extends State<InformacionLaboralPage> {
+  String? situacionLaboral;
+  String? sectorTrabajo;
+  String? origenFondos;
+
+  final List<String> opcionesSituacionLaboral = [
+    'Ingresos salariales',
+    'Prestaciones Del Gobierno',
+    'Pensión',
+    'Subvenciones',
+    'Donaciones',
+    'Ingresos Por Alquiler',
+    'Ingresos Familiares',
+    'Ingresos Del Mercado De Valores',
+  ];
+
+  final List<String> opcionesSectorTrabajo = [
+    'Agencias de Viajes e inmobiliarias',
+    'Agricultura, ganadería y pesca',
+    'Arte, joyería, casas de empeño y producción/venta de armas',
+    'Banca y seguros',
+    'Comercio de vehículos y servicios',
+    'Construcción',
+    'Deporte, juegos de azar, entretenimiento y gastronomía',
+  ];
+
+  final List<String> opcionesOrigenFondos = [
+    'Nómina',
+    'Ahorros',
+    'Herencia',
+    'Otros',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text("Información laboral", style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            DropdownButtonFormField<String>(
+              value: situacionLaboral,
+              dropdownColor: Colors.grey[850],
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: "¿Cuál es tu situación laboral?",
+                labelStyle: TextStyle(color: Colors.grey[400]),
+                filled: true,
+                fillColor: Colors.grey[800],
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              items: opcionesSituacionLaboral.map((opcion) {
+                return DropdownMenuItem(
+                  value: opcion,
+                  child: Text(opcion),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  situacionLaboral = value;
+                });
+              },
+            ),
+            SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              value: sectorTrabajo,
+              dropdownColor: Colors.grey[850],
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: "¿En qué sector trabajas?",
+                labelStyle: TextStyle(color: Colors.grey[400]),
+                filled: true,
+                fillColor: Colors.grey[800],
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              items: opcionesSectorTrabajo.map((opcion) {
+                return DropdownMenuItem(
+                  value: opcion,
+                  child: Text(opcion),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  sectorTrabajo = value;
+                });
+              },
+            ),
+            SizedBox(height: 16),
+            DropdownButtonFormField<String>(
+              value: origenFondos,
+              dropdownColor: Colors.grey[850],
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                labelText: "Origen previsto de fondos",
+                labelStyle: TextStyle(color: Colors.grey[400]),
+                filled: true,
+                fillColor: Colors.grey[800],
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              items: opcionesOrigenFondos.map((opcion) {
+                return DropdownMenuItem(
+                  value: opcion,
+                  child: Text(opcion),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  origenFondos = value;
+                });
+              },
+            ),
+            Spacer(),
+            ElevatedButton(
+              onPressed: (situacionLaboral != null && sectorTrabajo != null && origenFondos != null)
+                  ? () {
+                      // Acción al presionar "continuar"
+                      print("Situación: $situacionLaboral");
+                      print("Sector: $sectorTrabajo");
+                      print("Origen: $origenFondos");
+                    }
+                  : null,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple[800],
+                disabledBackgroundColor: Colors.purple[900],
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                minimumSize: Size(double.infinity, 50),
+              ),
+              child: Text("Continuar", style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
