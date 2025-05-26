@@ -16,6 +16,11 @@ import RegisterStep9Screen from '../screens/RegisterStep9Screen';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 
+// Nuevas pantallas de recuperación de contraseña
+import PasswordRecoveryScreen from '../screens/PasswordRecoveryScreen';
+import CodeVerificationScreen from '../screens/CodeVerificationScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
+
 const Stack = createStackNavigator();
 
 const AppNavigator = () => (
@@ -34,9 +39,15 @@ const AppNavigator = () => (
       <Stack.Screen name="RegisterStep9" component={RegisterStep9Screen} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
+
+      {/* Pantallas para recuperar contraseña */}
+      <Stack.Screen name="PasswordRecovery" component={PasswordRecoveryScreen} />
+      <Stack.Screen name="CodeVerification" component={CodeVerificationScreen} />
+      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );
 
 export default AppNavigator;
+
 
