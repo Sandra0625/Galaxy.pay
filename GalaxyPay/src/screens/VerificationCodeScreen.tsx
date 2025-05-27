@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  Image
+  Image,
+  Linking
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -41,7 +42,7 @@ export default function VerificationCodeScreen() {
     }
 
     // Aquí iría la validación real con backend
-    Alert.alert('Código recibido', Tu código es: ${fullCode});
+    Alert.alert('Código recibido', 'Tu código es: ${fullCode}');
   };
 
   return (
