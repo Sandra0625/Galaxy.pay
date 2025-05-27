@@ -18,7 +18,7 @@ import HomeScreen from '../screens/HomeScreen';
 
 // Pantallas de recuperación de contraseña
 import PasswordRecoveryScreen from '../screens/PasswordRecoveryScreen';
-import CodeVerificationScreen from '../screens/CodeVerificationScreen';
+import VerificationCodeScreen from '../screens/VerificationCodeScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 
 // Pantallas del asistente virtual
@@ -46,7 +46,7 @@ const AppNavigator = () => (
 
       {/* Pantallas para recuperar contraseña */}
       <Stack.Screen name="PasswordRecovery" component={PasswordRecoveryScreen} />
-      <Stack.Screen name="CodeVerification" component={CodeVerificationScreen} />
+      <Stack.Screen name="CodeVerification" component={VerificationCodeScreen} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
 
       {/* Pantallas del asistente virtual */}
