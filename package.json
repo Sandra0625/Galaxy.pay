@@ -1,16 +1,16 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "@react-native-community/datetimepicker": "^8.3.0",
-=======
     "@react-native-firebase/app": "^22.2.0",
->>>>>>> d30ec273708d344fd845f65ffd1c98017832f10b
     "@react-native-picker/picker": "^2.11.0",
+    "@react-navigation/drawer": "^7.3.12",
     "@react-navigation/native": "^7.1.9",
     "@react-navigation/native-stack": "^7.3.13",
     "firebase": "^11.8.1",
+    "react-native-gesture-handler": "^2.25.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-modal-datetime-picker": "^18.0.0",
+    "react-native-reanimated": "^3.17.5",
     "react-native-svg": "^15.12.0",
     "react-native-svg-transformer": "^1.5.1"
   }
