@@ -84,7 +84,7 @@ const RegisterStep5Screen = () => {
             styles.strengthBarFill,
             {
               backgroundColor: getPasswordStrengthColor(),
-              width: ${Math.min(password.length * 10, 100)}%,
+              width: '${Math.min(password.length * 10, 100)}%',
             },
           ]}
         />
