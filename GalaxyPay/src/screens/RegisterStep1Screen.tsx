@@ -22,7 +22,7 @@ const RegisterStep1Screen = ({ navigation }) => {
   const [searchText, setSearchText] = useState('');
 
   const filteredCountries = countries.filter((country) =>
-    ${country.label} ${country.code}
+    '${country.label} ${country.code}'
       .toLowerCase()
       .includes(searchText.toLowerCase())
   );
