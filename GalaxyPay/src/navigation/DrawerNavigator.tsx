@@ -1,8 +1,8 @@
-// src/navigation/DrawerNavigator.tsx
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Dashboard2Screen from '../screens/Dashboard2Screen';
 import AssistantWelcomeScreen from '../screens/AssistantWelcomeScreen';
+import ProfileStack from './ProfileStack'; // Importa el nuevo stack
 
 const Drawer = createDrawerNavigator();
 
@@ -17,9 +17,10 @@ const DrawerNavigator = () => {
     >
       <Drawer.Screen name="Dashboard" component={Dashboard2Screen} />
       <Drawer.Screen name="Asistente Virtual" component={AssistantWelcomeScreen} />
-      {/* Puedes añadir más submenús aquí */}
+      <Drawer.Screen name="Configuración" component={ProfileStack} />
     </Drawer.Navigator>
   );
 };
 
 export default DrawerNavigator;
+
