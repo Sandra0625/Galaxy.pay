@@ -1,108 +1,88 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  SafeAreaView,
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import MenuLateral from '../components/MenuLateral';
+// Dashboard1Screen.tsx
 
-export default function Dashboard1Screen({ navigation }) {
-  const [menuVisible, setMenuVisible] = useState(false);
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import SvgUri from 'react-native-svg-uri'; // o react-native-svg para SVG local
+import welcomeBg from '../assets/welcome_bg.svg';
+
+export default function Dashboard1Screen() {
+  const navigation = useNavigation();
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.container}>
-        {/* Encabezado */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => setMenuVisible(true)}>
-            <Ionicons name="menu" size={28} color="#fff" />
+    <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.greeting}>Hola, Nombre Usuario</Text>
+          <Text style={styles.subtitle}>Buenos días</Text>
+        </View>
+
+        <View style={styles.headerRight}>
+          <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+            <View style={styles.notificationIcon}>
+              <Icon name="notifications-outline" size={24} color="#fff" />
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>3</Text>
+              </View>
+            </View>
           </TouchableOpacity>
 
-          <View style={styles.userInfo}>
-            <Image
-              source={{ uri: 'https://i.pravatar.cc/100' }}
-              style={styles.avatar}
-            />
-            <View>
-              <Text style={styles.greeting}>Hola, Nombre Usuario</Text>
-              <Text style={styles.subGreeting}>Buenos días</Text>
-            </View>
-          </View>
-
-          <Ionicons
-            name="notifications-outline"
-            size={24}
-            color="#fff"
-            style={styles.notificationIcon}
-          />
+          <TouchableOpacity>
+            <Icon name="menu-outline" size={28} color="#fff" />
+          </TouchableOpacity>
         </View>
+      </View>
 
-        {/* Aquí puedes añadir el contenido del dashboard */}
-        <View style={styles.content}>
-          <Text style={styles.contentText}>Contenido del Dashboard</Text>
-        </View>
-      </ScrollView>
+      {/* Agrega aquí el resto del contenido del Dashboard como tarjetas, accesos rápidos, etc. */}
 
-      {/* Menú Lateral */}
-      <MenuLateral
-        visible={menuVisible}
-        onClose={() => setMenuVisible(false)}
-        navigation={navigation}
-      />
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#1b1b1f',
-  },
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 40,
+    backgroundColor: '#1a1a1a',
+    padding: 16,
   },
   header: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
-  },
-  userInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 15,
-    flex: 1,
-  },
-  avatar: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    marginRight: 10,
   },
   greeting: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  subGreeting: {
+  subtitle: {
     color: '#aaa',
     fontSize: 14,
   },
-  notificationIcon: {
-    marginLeft: 'auto',
-  },
-  content: {
-    marginTop: 40,
+  headerRight: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 16,
   },
-  contentText: {
+  notificationIcon: {
+    position: 'relative',
+    marginRight: 12,
+  },
+  badge: {
+    position: 'absolute',
+    top: -5,
+    right: -5,
+    backgroundColor: '#e7458f',
+    borderRadius: 8,
+    paddingHorizontal: 4,
+    paddingVertical: 1,
+  },
+  badgeText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 10,
+    fontWeight: 'bold',
   },
 });
+
+

@@ -18,14 +18,35 @@ import LoginScreen from '../screens/LoginScreen';
 
 // Recuperación de contraseña
 import PasswordRecoveryScreen from '../screens/PasswordRecoveryScreen';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+// Pantallas de bienvenida y autenticación
+import WelcomeScreen from '../screens/WelcomeScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import RegisterStep1Screen from '../screens/RegisterStep1Screen';
+import RegisterStep2Screen from '../screens/RegisterStep2Screen';
+import RegisterStep3Screen from '../screens/RegisterStep3Screen';
+import RegisterStep4Screen from '../screens/RegisterStep4Screen';
+import RegisterStep5Screen from '../screens/RegisterStep5Screen';
+import RegisterStep6Screen from '../screens/RegisterStep6Screen';
+import RegisterStep7Screen from '../screens/RegisterStep7Screen';
+import RegisterStep8Screen from '../screens/RegisterStep8Screen';
+import RegisterStep9Screen from '../screens/RegisterStep9Screen';
+import LoginScreen from '../screens/LoginScreen';
+import PasswordRecoveryScreen from '../screens/PasswordRecoveryScreen';
 import VerificationCodeScreen from '../screens/VerificationCodeScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 
-// Asistente virtual
+// Pantallas del asistente virtual
 import AssistantWelcomeScreen from '../screens/AssistantWelcomeScreen';
 import AssistantChatScreen from '../screens/AssistantChatScreen';
 
-// 🚀 Nuevo: Drawer Navigator (reemplaza HomeScreen)
+// Pantalla de notificaciones
+import NotificationsScreen from '../screens/NotificationsScreen';
+
+// Drawer principal
 import DrawerNavigator from './DrawerNavigator';
 
 const Stack = createStackNavigator();
@@ -45,20 +66,20 @@ const AppNavigator = () => (
       <Stack.Screen name="RegisterStep8" component={RegisterStep8Screen} />
       <Stack.Screen name="RegisterStep9" component={RegisterStep9Screen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-
-      {/* 💥 Reemplazado: Home ahora es DrawerNavigator */}
       <Stack.Screen name="Home" component={DrawerNavigator} />
-
       <Stack.Screen name="PasswordRecovery" component={PasswordRecoveryScreen} />
       <Stack.Screen name="CodeVerification" component={VerificationCodeScreen} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
-
       <Stack.Screen name="AssistantWelcome" component={AssistantWelcomeScreen} />
       <Stack.Screen name="AssistantChat" component={AssistantChatScreen} />
+
+      {/* Nueva pantalla de notificaciones */}
+      <Stack.Screen name="NotificationsScreen" component={NotificationsScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );
 
 export default AppNavigator;
+
 
 
