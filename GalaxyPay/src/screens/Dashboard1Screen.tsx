@@ -1,10 +1,8 @@
-// Dashboard1Screen.tsx
-
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import SvgUri from 'react-native-svg-uri'; // o react-native-svg para SVG local
+import SvgUri from 'react-native-svg-uri'; // o usar react-native-svg para SVG locales
 import welcomeBg from '../assets/welcome_bg.svg';
 
 export default function Dashboard1Screen() {
@@ -19,7 +17,7 @@ export default function Dashboard1Screen() {
         </View>
 
         <View style={styles.headerRight}>
-          <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+          <TouchableOpacity onPress={() => navigation.navigate('NotificationsScreen')}>
             <View style={styles.notificationIcon}>
               <Icon name="notifications-outline" size={24} color="#fff" />
               <View style={styles.badge}>
@@ -34,8 +32,18 @@ export default function Dashboard1Screen() {
         </View>
       </View>
 
-      {/* Agrega aquí el resto del contenido del Dashboard como tarjetas, accesos rápidos, etc. */}
+      {/* Accesos rápidos (Remesas, etc.) */}
+      <View style={styles.quickActions}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => navigation.navigate('RemesaSeleccion')}
+        >
+          <Icon name="send" size={24} color="#fff" />
+          <Text style={styles.actionText}>Remesas</Text>
+        </TouchableOpacity>
 
+        {/* Puedes agregar otros botones similares aquí */}
+      </View>
     </ScrollView>
   );
 }
@@ -83,6 +91,26 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: 'bold',
   },
+  quickActions: {
+    marginTop: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  actionButton: {
+    backgroundColor: '#e7458f',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  actionText: {
+    color: '#fff',
+    marginLeft: 10,
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
+
 
 
